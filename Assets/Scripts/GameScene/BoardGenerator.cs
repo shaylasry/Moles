@@ -25,7 +25,7 @@ public class BoardGenerator : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 Vector3 position = new Vector3(initialX + j * tile.width, 0, initialZ + i * tile.height);
-                Instantiate(tile.prefab, position, Quaternion.identity);
+                Instantiate(tile.prefab, position, Quaternion.identity, transform);
             }
         }
     }
