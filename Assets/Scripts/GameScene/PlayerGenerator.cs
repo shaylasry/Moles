@@ -1,12 +1,8 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerGenerator : MonoBehaviour
 {
     [SerializeField] private Player player;
-    
-
     public void Start()
     {
         GeneratePlayer();
@@ -16,7 +12,4 @@ public class PlayerGenerator : MonoBehaviour
     {
         Instantiate(player.prefab, new Vector3(0, 1, 0), Quaternion.identity);
     }
-
-    
-    
 }
