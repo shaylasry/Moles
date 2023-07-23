@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] private float width;
-    [SerializeField] private float height;
-    [SerializeField] private FloorTile tile;
-    
+
+    [SerializeField] private Board _board;
     
     // Start is called before the first frame update
     void Start()
@@ -17,15 +15,15 @@ public class BoardGenerator : MonoBehaviour
 
     private void GenerateBoard()
     {
-        float initialX = (-width / 2) + (tile.width / 2);
-        float initialZ = (-height / 2) + (tile.height / 2);
+        float initialX = (-_board.width / 2) + (_board.tile.width / 2);
+        float initialZ = (-_board.height / 2) + (_board.tile.height / 2);
 
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < _board.width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _board.height; j++)
             {
-                Vector3 position = new Vector3(initialX + j * tile.width, 0, initialZ + i * tile.height);
-                Instantiate(tile.prefab, position, Quaternion.identity);
+                Vector3 position = new Vector3(initialX + j * _board.tile.width, 0, initialZ + i * _board.tile.height);
+                Instantiate(_board.tile.prefab, position, Quaternion.identity);
             }
         }
     }
