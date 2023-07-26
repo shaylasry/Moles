@@ -31,10 +31,7 @@ public class EnemiesGenerator : MonoBehaviour
     {
         for (int i = 0; i < numOfMoles; i++)
         {
-            int randomXIndex = Random.Range(0, boardData.GetLength(0));
-            int randomZIndex = Random.Range(0, boardData.GetLength(1));
-            Vector3 position = boardData[randomXIndex, randomZIndex];
-            _moles.Add(Instantiate(molePrefab, position, Quaternion.identity, transform));
+            _moles.Add(Instantiate(molePrefab, GetNewMolePosition(), Quaternion.identity, transform));
         }
     }
     
@@ -44,16 +41,35 @@ public class EnemiesGenerator : MonoBehaviour
         {
             foreach (GameObject mole in _moles)
             {
-                int randomXIndex = Random.Range(0, boardData.GetLength(0));
-                int randomZIndex = Random.Range(0, boardData.GetLength(1));
-                Vector3 newPosition = boardData[randomXIndex, randomZIndex];
-                mole.transform.position = newPosition;
+                mole.transform.position = GetNewMolePosition();
             }
 
             yield return new WaitForSeconds(3f);
         }
     }
+    
+    private Vector3 GetNewMolePosition()
+    {
+        Vector3 newPosition = GeneratePosition();
+        //TO DO: will check if there is another object that we might colide with.
+        // RaycastHit hit;
+        // float raycastDistance = 0.00f; 
+        // while (Physics.Raycast(newPosition, Vector3.down, out hit, raycastDistance))
+        // {
+        //     newPosition = GeneratePosition();
+        // }
+        return newPosition;
+    }
+    private Vector3 GeneratePosition()
+    {
+        int randomXIndex = Random.Range(0, boardData.GetLength(0));
+        int randomZIndex = Random.Range(0, boardData.GetLength(1));
+        Vector3 position = boardData[randomXIndex, randomZIndex];
+        position.y += 1;
 
+        return position;
+    }
+    
     private void SubscribeEvents()
     {
         BoardGenerator.BoardDidLoad += OnBoardDidLoad;
