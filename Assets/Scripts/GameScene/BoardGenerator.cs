@@ -1,38 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] private float width;
-    [SerializeField] private float height;
-    [SerializeField] private FloorTile tile;
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    public static event Action<BoardGenerator> BoardDidLoad;
+    [SerializeField] private Board board; 
+    public Vector3[,] boardData { get; private set; }
+
+    private void Awake()
     {
-        GenerateBoard();
+        GenerateBoardData();
+        InstantiateBoard(boardData);
+        BoardDidLoad?.Invoke(this);
     }
-
-    private void GenerateBoard()
+    
+    private void GenerateBoardData()
     {
-        float initialX = (-width / 2) + (tile.width / 2);
-        float initialZ = (-height / 2) + (tile.height / 2);
-
+        int width = board.width;
+        int height = board.height;
+        FloorTile tile = board.tile;
+        boardData = new Vector3[width, height];
+        
+        Vector3 position = transform.position;
+        float initialPositionX = position.x - (board.width / 2) + (board.tile.width / 2);
+        float initialPositionZ = position.z - (board.height / 2) + (board.tile.height / 2);
+        float initialPositionY = position.y;
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector3 position = new Vector3(initialX + j * tile.width, 0, initialZ + i * tile.height);
-                Instantiate(tile.prefab, position, Quaternion.identity, transform);
+                Vector3 cellPosition = new Vector3(initialPositionX + j * tile.width, initialPositionY, initialPositionZ + i * tile.height);
+                boardData[i, j] = cellPosition;
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void InstantiateBoard(Vector3[,] gridData)
     {
-        
+        for (int i = 0; i < gridData.GetLength(0); i++)
+        {
+            for (int j = 0; j < gridData.GetLength(1); j++)
+            {
+                // Instantiate the cell prefab at the stored position
+                Instantiate(board.tile.prefab, gridData[i, j], Quaternion.identity, transform);
+            }
+        }
     }
 }
