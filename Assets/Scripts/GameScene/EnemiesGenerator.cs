@@ -51,7 +51,7 @@ public class EnemiesGenerator : MonoBehaviour
     private Vector3 GetNewMolePosition()
     {
         Vector3 newPosition = GeneratePosition();
-        //TO DO: will check if there is another object that we might colide with.
+        //TO DO: will check if there is another object that we might collide with.
         // RaycastHit hit;
         // float raycastDistance = 0.00f; 
         // while (Physics.Raycast(newPosition, Vector3.down, out hit, raycastDistance))
