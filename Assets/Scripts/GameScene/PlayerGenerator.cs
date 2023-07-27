@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 public class PlayerGenerator : MonoBehaviour
 {
-    [FormerlySerializedAs("player")] [SerializeField] private PlayerData playerData;
+    [SerializeField] private PlayerData playerData;
     
     public void Start()
     {
