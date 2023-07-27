@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerGenerator : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    [FormerlySerializedAs("player")] [SerializeField] private PlayerData playerData;
+    
     public void Start()
     {
         GeneratePlayer();
@@ -10,6 +12,6 @@ public class PlayerGenerator : MonoBehaviour
 
     private void GeneratePlayer()
     {
-        Instantiate(player.prefab, new Vector3(0, 1, 0), Quaternion.identity);
+        Instantiate(playerData.prefab, new Vector3(0, 1, 0), Quaternion.identity);
     }
 }

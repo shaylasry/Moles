@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] private Board _board;
+    [SerializeField] private BoardData boardData;
+    
     void Start()
     {
         GenerateBoard();
@@ -10,15 +11,15 @@ public class BoardGenerator : MonoBehaviour
 
     private void GenerateBoard()
     {
-        float initialX = (-_board.width / 2) + (_board.tile.width / 2);
-        float initialZ = (-_board.height / 2) + (_board.tile.height / 2);
+        float initialX = (-boardData.width / 2) + (boardData.tile.width / 2);
+        float initialZ = (-boardData.height / 2) + (boardData.tile.height / 2);
 
-        for (int i = 0; i < _board.width; i++)
+        for (int i = 0; i < boardData.width; i++)
         {
-            for (int j = 0; j < _board.height; j++)
+            for (int j = 0; j < boardData.height; j++)
             {
-                Vector3 position = new Vector3(initialX + j * _board.tile.width, 0, initialZ + i * _board.tile.height);
-                Instantiate(_board.tile.prefab, position, Quaternion.identity);
+                Vector3 position = new Vector3(initialX + j * boardData.tile.width, 0, initialZ + i * boardData.tile.height);
+                Instantiate(boardData.tile.prefab, position, Quaternion.identity, transform);
             }
         }
     }
