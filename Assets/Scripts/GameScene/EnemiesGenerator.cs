@@ -2,64 +2,60 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemiesGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject molePrefab;
-    [SerializeField] private int numOfMoles;
+    [SerializeField] private GameObject _molePrefab;
+    [SerializeField] private int _numOfMoles;
     private List<GameObject> _moles = new List<GameObject>();
     private HashSet<Vector3> _staticEnemies = new HashSet<Vector3>();
-    private bool boardDidLoad = false;
-    private Vector3[,] boardData;
+    private bool _isGameRunning; 
     
-    private void OnEnable()
+    void OnEnable()
     {
-        SubscribeEvents();
+        _isGameRunning = true; 
+    }
+    void OnDisable()
+    {
+        _isGameRunning = false;
     }
 
-    private void OnDisable()
-    {
-        UnsubscribeEvents();
-    }
-    
-    void Start()
-    {
-        StartCoroutine(MolesMovementCoroutine());
-    }
-
-    private void GenerateMoles()
+    public void GenerateMoles(Vector3[,] tilePositions)
     {
         HashSet<Vector3> currentMolesPositions = new HashSet<Vector3>();
-        for (int i = 0; i < numOfMoles; i++)
+        for (int i = 0; i < _numOfMoles; i++)
         {
-            _moles.Add(Instantiate(molePrefab, GetNewMolePosition(currentMolesPositions), Quaternion.identity, transform));
+            _moles.Add(Instantiate(_molePrefab, GetNewMolePosition(currentMolesPositions, tilePositions), Quaternion.identity, transform));
         }
+        
+        StartCoroutine(MolesMovementCoroutine(tilePositions));
     }
-    
-    IEnumerator MolesMovementCoroutine()
+
+    IEnumerator MolesMovementCoroutine(Vector3[,] tilePositions)
     {
-        while (boardDidLoad)
+        while (_isGameRunning)
         {
             HashSet<Vector3> currentMolesPositions = new HashSet<Vector3>();
             foreach (GameObject mole in _moles)
             {
-                Vector3 newMolePosition = GetNewMolePosition(currentMolesPositions);
+                Vector3 newMolePosition = GetNewMolePosition(currentMolesPositions, tilePositions);
                 mole.transform.position = newMolePosition;
                 currentMolesPositions.Add(newMolePosition);
             }
 
             yield return new WaitForSeconds(3f);
         }
-    }
+}
     
-    private Vector3 GetNewMolePosition(HashSet<Vector3> currentMolesPositions)
+    private Vector3 GetNewMolePosition(HashSet<Vector3> currentMolesPositions, Vector3[,] tilePositions)
     {
-        Vector3 newPosition = GeneratePosition();
+        Vector3 newPosition = GeneratePosition(tilePositions);
         
         while (!IsPositionValid(newPosition, currentMolesPositions))
         {
-            newPosition = GeneratePosition();
+            newPosition = GeneratePosition(tilePositions);
         }
         
         return newPosition;
@@ -69,30 +65,15 @@ public class EnemiesGenerator : MonoBehaviour
     {
         return !currentMolesPositions.Contains(position) && !_staticEnemies.Contains(position);
     }
-    private Vector3 GeneratePosition()
+    
+    private Vector3 GeneratePosition(Vector3[,] tilePositions)
     {
-        int randomXIndex = Random.Range(0, boardData.GetLength(0));
-        int randomZIndex = Random.Range(0, boardData.GetLength(1));
-        Vector3 position = boardData[randomXIndex, randomZIndex];
+        int randomXIndex = Random.Range(0, tilePositions.GetLength(0));
+        int randomZIndex = Random.Range(0, tilePositions.GetLength(1));
+        Vector3 position = tilePositions[randomXIndex, randomZIndex];
         position.y += 1;
 
         return position;
     }
     
-    private void SubscribeEvents()
-    {
-        BoardGenerator.BoardDidLoad += OnBoardDidLoad;
-    }
-
-    private void UnsubscribeEvents()
-    {
-        BoardGenerator.BoardDidLoad -= OnBoardDidLoad;
-    }
-
-    private void OnBoardDidLoad(BoardGenerator boardGenerator)
-    {
-        boardData = boardGenerator.boardData;
-        GenerateMoles();
-        boardDidLoad = true;
-    }
 }
