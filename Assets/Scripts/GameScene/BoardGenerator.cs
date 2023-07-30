@@ -1,38 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] private float width;
-    [SerializeField] private float height;
-    [SerializeField] private FloorTile tile;
+    public Vector3[,] tilePositions { get; private set; }
+    public GameObject[,] tiles;
     
+    private EnemiesGenerator _enemiesGenerator;
+    [SerializeField] private BoardData _boardData; 
     
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         GenerateBoard();
+        _enemiesGenerator = GetComponent<EnemiesGenerator>();
+        _enemiesGenerator.GenerateMoles(tilePositions);
     }
-
+    
     private void GenerateBoard()
     {
-        float initialX = (-width / 2) + (tile.width / 2);
-        float initialZ = (-height / 2) + (tile.height / 2);
-
+        int width = _boardData.width;
+        int height = _boardData.height;
+        FloorTile tile = _boardData.tile;
+        tilePositions = new Vector3[width, height];
+        tiles = new GameObject[width, height];
+        
+        Vector3 position = transform.position;
+        float initialPositionX = position.x - (_boardData.width / 2) + (_boardData.tile.width / 2);
+        float initialPositionZ = position.z - (_boardData.height / 2) + (_boardData.tile.height / 2);
+        float initialPositionY = position.y;
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector3 position = new Vector3(initialX + j * tile.width, 0, initialZ + i * tile.height);
-                Instantiate(tile.prefab, position, Quaternion.identity, transform);
+                Vector3 cellPosition = new Vector3(initialPositionX + j * tile.width, initialPositionY, initialPositionZ + i * tile.height);
+                tilePositions[i, j] = cellPosition;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        InstantiateBoard();
+    }
+    
+    private void InstantiateBoard()
+    {
+        for (int i = 0; i < tilePositions.GetLength(0); i++)
+        {
+            for (int j = 0; j < tilePositions.GetLength(1); j++)
+            {
+                // Instantiate the cell prefab at the stored position
+                tiles[i, j] = Instantiate(_boardData.tile.prefab, tilePositions[i, j], Quaternion.identity, transform);
+            }
+        }
     }
 }
