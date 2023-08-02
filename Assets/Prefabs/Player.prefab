@@ -123,5 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b43394caee4bbcaedb9e2844d6085d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 0}
-  rotationFactorPerFrame: 1
+  _boardData: {fileID: 0}
+  _movementSpeed: 3
