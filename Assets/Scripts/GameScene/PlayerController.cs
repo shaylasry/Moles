@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         FloorTile tile = _boardData.tile;
         
-        if (tile == null || tile.prefab == null)
+        if (tile == null || tile.tilePrefab == null)
         {
             Debug.LogWarning("FloorTile or its prefab is missing.");
             return new Bounds(Vector3.zero, Vector3.zero);

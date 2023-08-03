@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb55145524b18a419697c2ab7e66ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardData: {fileID: 11400000, guid: 4ec294954850cbb4ea001524eeae7bd3, type: 2}
+  _boardData: {fileID: 11400000, guid: 4ec294954850cbb4ea001524eeae7bd3, type: 2}
 --- !u!4 &1766327314
 Transform:
   m_ObjectHideFlags: 0
@@ -448,6 +448,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 4ec294954850cbb4ea001524eeae7bd3,
         type: 2}
+    - target: {fileID: 796828518872279543, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
+        type: 3}
+      propertyPath: _boardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ec294954850cbb4ea001524eeae7bd3,
+        type: 2}
+    - target: {fileID: 796828518872279543, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
+        type: 3}
+      propertyPath: _movementSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1828176343135722300, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
         type: 3}
       propertyPath: m_Name
