@@ -50,7 +50,16 @@ public class PlayerController : MonoBehaviour
 
         _currentDirection = context.ReadValue<Vector2>();
     }
-
+    
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("[test] colision");
+        if (other.gameObject.CompareTag("Grass"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+    
     private void SetInitialPosition()
     {
         float startX = -1 * (int)_boardData.width / 2 * _boardData.tile.width + _boardData.tile.width / 2;
