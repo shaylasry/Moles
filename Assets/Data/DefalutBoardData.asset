@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9e27a601db708c4eb0701ab79682268, type: 3}
-  m_Name: DefaultBoardData
+  m_Name: DefalutBoardData
   m_EditorClassIdentifier: 
   width: 10
   height: 10
-  tile: {fileID: 11400000, guid: 4cfcc2afc0f7ab34298133e8e8cb8a4d, type: 2}
+  center: {x: 0, y: 0, z: 0}
+  tile: {fileID: 11400000, guid: 721446309f9fa3b4d925a2053a0c72ce, type: 2}

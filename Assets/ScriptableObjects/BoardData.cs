@@ -7,5 +7,6 @@ public class BoardData : ScriptableObject
 {
     public float width;
     public float height;
+    public Vector3 center;
     public FloorTile tile;
 }

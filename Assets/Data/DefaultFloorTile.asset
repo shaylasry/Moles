@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee6dc5a45b42524f8fed41091c5b88c, type: 3}
   m_Name: DefaultFloorTile
   m_EditorClassIdentifier: 
-  width: 0
-  height: 0
-  tilePrefab: {fileID: 0}
-  grassPrefab: {fileID: 0}
+  width: 1
+  height: 1
+  grassPerTile: 4
+  tilePrefab: {fileID: 6710738013854740485, guid: 36c6e77b8a39df44bb5cf92f1e6c2089,
+    type: 3}
+  grassPrefab: {fileID: 1799261963466375799, guid: a2e8f2d9f0fab3b49a28e829bfc86e92,
+    type: 3}
