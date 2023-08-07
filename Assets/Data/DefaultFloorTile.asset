@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee6dc5a45b42524f8fed41091c5b88c, type: 3}
   m_Name: DefaultFloorTile
   m_EditorClassIdentifier: 
-  width: 2
-  height: 2
+  width: 1
+  height: 1
   tilePrefab: {fileID: 2744144117369893961, guid: 22270861d0efd4b97b6efe478e7c9c77,
     type: 3}

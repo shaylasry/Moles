@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private float _grassPopCooldown;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _grassPopAudioClip;
+    
+    [SerializeField] private ParticleSystem _smokeParticleSystem;
 
     private void Start()
     {
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
         
         _currentDirection = context.ReadValue<Vector2>();
         HandleRotation();
+        HandleSmoke();
     }
 
     private void HandleRotation()
@@ -138,5 +141,10 @@ public class PlayerController : MonoBehaviour
         }
         
         _audioSource.pitch = _audioPitch;
+    }
+    
+    private void HandleSmoke()
+    { 
+        _smokeParticleSystem.Play();
     }
 }

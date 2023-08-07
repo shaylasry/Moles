@@ -209,6 +209,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1957660588}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &889805062 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1680543226430786858, guid: c304ec9ecd6f2e94c996d42724c16074,
+    type: 3}
+  m_PrefabInstance: {fileID: 994855778}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &889805064 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+    type: 3}
+  m_PrefabInstance: {fileID: 994855778}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &890265320 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6624446795131423656, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
@@ -348,6 +360,80 @@ MonoBehaviour:
   _movementSpeed: 10
   _rotationSpeed: 50
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
+  _smokeParticleSystem: {fileID: 889805062}
+--- !u!1001 &994855778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 890265320}
+    m_Modifications:
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000001117587
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.998917
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.04652788
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -5.334
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117371342934856680, guid: c304ec9ecd6f2e94c996d42724c16074,
+        type: 3}
+      propertyPath: m_Name
+      value: Smoke Particle System
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c304ec9ecd6f2e94c996d42724c16074, type: 3}
 --- !u!4 &1357358461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684433304399607480, guid: 9cb5088673a924d409361addf588189c,
@@ -755,6 +841,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1357358461}
+    - targetCorrespondingSourceObject: {fileID: 6624446795131423656, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 889805064}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1828176343135722300, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
         type: 3}
