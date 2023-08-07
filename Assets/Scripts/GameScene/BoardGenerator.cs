@@ -25,37 +25,5 @@ public class BoardGenerator : MonoBehaviour
                 _tiles[i,j] = Instantiate(_boardData.tile.tilePrefab, position, Quaternion.identity, transform);
             }
         }
-
-        GenerateGrass();
-    }
-
-    private void GenerateGrass()
-    {
-        foreach (GameObject tile in _tiles)
-        {
-            for (int i = 0; i < _boardData.tile.grassPerTile; i++)
-            {
-                HashSet<Vector3> grassPoistions = new HashSet<Vector3>();
-                Vector3 spawnPosition = GetGrassPosition(tile.transform.position);
-                while (grassPoistions.Contains(spawnPosition))
-                {
-                    spawnPosition = GetGrassPosition(tile.transform.position);
-                }
-
-                grassPoistions.Add(spawnPosition);
-                Instantiate(_boardData.tile.grassPrefab, spawnPosition, Quaternion.identity, tile.transform);
-            }
-        }
-    }
-
-    private Vector3 GetGrassPosition(Vector3 position)
-    {
-        Vector3 randomOffset = new Vector3(
-            Random.Range(-_boardData.tile.width / 2, _boardData.tile.width / 2),
-            0,
-            Random.Range(-_boardData.tile.height / 2, _boardData.tile.height / 2)
-        );
-        
-        return position + randomOffset;
     }
 }

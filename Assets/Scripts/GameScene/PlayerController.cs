@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Debug.Log("[test] colision");
-        if (other.gameObject.CompareTag("Grass"))
+        if (other.gameObject.CompareTag("GrassBlade"))
         {
             Destroy(other.gameObject);
             HandleGrassBladeCollision();
@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
     private void HandleGrassBladeCollision()
     {
         _audioPitch += .01f;
-        
         if (_grassPopCooldown <= 0)
         {
             _grassPopCooldown = .05f;
@@ -134,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
         if (_audioPitch >= 1f)
         {
-            _audioPitch -= 0.5f * Time.deltaTime;
+            _audioPitch -= 1f * Time.deltaTime;
             _audioPitch = Mathf.Max(1f, _audioPitch);
         }
         

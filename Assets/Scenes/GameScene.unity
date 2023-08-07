@@ -144,7 +144,7 @@ PrefabInstance:
     - target: {fileID: 4684433304399607480, guid: 9cb5088673a924d409361addf588189c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4684433304399607480, guid: 9cb5088673a924d409361addf588189c,
         type: 3}
@@ -191,6 +191,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MowerPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8400262321019083304, guid: 9cb5088673a924d409361addf588189c,
+        type: 3}
+      propertyPath: _speed
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8504758989033045669, guid: 9cb5088673a924d409361addf588189c, type: 3}
     - {fileID: 1870993922949899329, guid: 9cb5088673a924d409361addf588189c, type: 3}
@@ -229,7 +234,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.95
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0.37, z: 0.16}
 --- !u!82 &890265322
 AudioSource:
@@ -340,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
-  _movementSpeed: 5
+  _movementSpeed: 10
   _rotationSpeed: 50
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
 --- !u!4 &1357358461 stripped
@@ -809,9 +814,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 890265323}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Move
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

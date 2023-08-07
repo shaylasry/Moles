@@ -7,7 +7,5 @@ public class FloorTile : ScriptableObject
 {
     public float width;
     public float height;
-    public int grassPerTile;
     public GameObject tilePrefab;
-    public GameObject grassPrefab;
 }
