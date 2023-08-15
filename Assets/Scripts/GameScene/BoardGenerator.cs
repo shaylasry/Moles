@@ -1,38 +1,29 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [SerializeField] private float width;
-    [SerializeField] private float height;
-    [SerializeField] private FloorTile tile;
+    [SerializeField] private BoardData _boardData;
+    private GameObject[,] _tiles; 
     
-    
-    // Start is called before the first frame update
     void Start()
     {
         GenerateBoard();
     }
-
     private void GenerateBoard()
     {
-        float initialX = (-width / 2) + (tile.width / 2);
-        float initialZ = (-height / 2) + (tile.height / 2);
-
-        for (int i = 0; i < width; i++)
+        _tiles = new GameObject[(int)_boardData.width,(int)_boardData.height];
+        float initialX = (-_boardData.width / 2) + (_boardData.tile.width / 2);
+        float initialZ = (-_boardData.height / 2) + (_boardData.tile.height / 2);
+        
+        for (int i = 0; i < _boardData.width; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < _boardData.height; j++)
             {
-                Vector3 position = new Vector3(initialX + j * tile.width, 0, initialZ + i * tile.height);
-                Instantiate(tile.prefab, position, Quaternion.identity, transform);
+                Vector3 position = new Vector3(initialX + j * _boardData.tile.width, 0, initialZ + i * _boardData.tile.height);
+                _tiles[i,j] = Instantiate(_boardData.tile.tilePrefab, position, Quaternion.identity, transform);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
