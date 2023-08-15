@@ -11,11 +11,13 @@ public class BoardGenerator : MonoBehaviour
     {
         GenerateBoard();
     }
+    
     private void GenerateBoard()
     {
         _tiles = new GameObject[(int)_boardData.width,(int)_boardData.height];
-        float initialX = (-_boardData.width / 2) + (_boardData.tile.width / 2);
-        float initialZ = (-_boardData.height / 2) + (_boardData.tile.height / 2);
+        
+        float initialX = (-_boardData.width * _boardData.tile.width / 2) + (_boardData.tile.width / 2);
+        float initialZ = (-_boardData.height * _boardData.tile.height / 2) + (_boardData.tile.height / 2);
         
         for (int i = 0; i < _boardData.width; i++)
         {

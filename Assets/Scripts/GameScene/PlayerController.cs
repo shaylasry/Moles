@@ -88,13 +88,16 @@ public class PlayerController : MonoBehaviour
     
     private void SetInitialPosition()
     {
-        float startX = -1 * (int)_boardData.width / 2 * _boardData.tile.width + _boardData.tile.width / 2;
-        float startY = 1f;
-        float startZ = (int)_boardData.height / 2 * _boardData.tile.height - _boardData.tile.width / 2;
+        Vector2 boardSize = new Vector2(_boardData.width * _boardData.tile.width,
+            _boardData.height * _boardData.tile.height);
 
-        Vector3 startPos = new Vector3(startX, startY, startZ);
+        float startX = -boardSize.x / 2 + _boardData.tile.width / 2;
+        float startZ = boardSize.y / 2 - _boardData.tile.height / 2;
+
+        Vector3 startPos = new Vector3(startX, 1f, startZ);
 
         transform.position = startPos;
+        
         HandleRotation();
     }
     
@@ -107,9 +110,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("FloorTile or its prefab is missing.");
             return new Bounds(Vector3.zero, Vector3.zero);
         }
-    
-        Vector3 tileSize = new Vector3(tile.width, 0f, tile.height);
-        Vector3 boardSize = new Vector3( _boardData.width * tileSize.x, 1f,  _boardData.height * tileSize.z);
+        
+        Vector3 boardSize = new Vector3( _boardData.width * tile.width, 1f,  _boardData.height * tile.height);
         Vector3 center = _boardData.center;
         center.y += 1;
 
