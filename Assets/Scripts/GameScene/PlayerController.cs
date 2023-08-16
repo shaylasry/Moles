@@ -9,10 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
     
-    [SerializeField] private float _movementSpeed = 20f;
+    [SerializeField] private float _movementDuration = 0.1f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
-    private Vector3 _positionToMoveTo;
     
     private float _audioPitch = 1f;
     private float _grassPopCooldown;
@@ -44,31 +43,18 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator LerpPosition()
     {
-        float time = 0;
-        
         Vector3 newPos = CalculateNewPosition();
 
         if (_boardBounds.Contains(newPos))
         {
-            float step = (_movementSpeed / Vector3.Distance(transform.position, newPos)) * Time.deltaTime;
-            while (time < 1)
+            float time = 0;
+            while (time < _movementDuration)
             {
-                transform.position = Vector3.Lerp(transform.position, newPos, time);
-                time += step;
-                yield return new WaitForSeconds(0.01f);
+                transform.position = Vector3.Lerp(transform.position, newPos, time / _movementDuration);
+                time += Time.deltaTime;
+                yield return null;
             }
 
-            transform.position = newPos;
-        }
-    }
- 
-    
-    private void HandleMovement()
-    {
-        Vector3 newPos = CalculateNewPosition();
-
-        if (_boardBounds.Contains(newPos))
-        {
             transform.position = newPos;
         }
     }
@@ -116,7 +102,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("[test] colision");
         if (other.gameObject.CompareTag("GrassBlade"))
         {
             Destroy(other.gameObject);
