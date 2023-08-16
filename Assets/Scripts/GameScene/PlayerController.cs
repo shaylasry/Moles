@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -8,9 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
     
-    [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float _movementSpeed = 13f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
+    private Vector3 _positionToMoveTo;
     
     private float _audioPitch = 1f;
     private float _grassPopCooldown;
@@ -24,15 +26,54 @@ public class PlayerController : MonoBehaviour
         SetInitialPosition();
         _boardBounds = CalculateBounds();
         _audioSource = GetComponent<AudioSource>();
+        StartCoroutine(MovementCoroutine());
     }
 
     void Update()
     {
-        HandleMovement();
         HandlePitch();
     }
+    
+    IEnumerator MovementCoroutine()
+    {
+        while (true) // Infinite loop to keep the coroutine running
+        {
+            yield return LerpPosition();
+        }
+    }
 
+    IEnumerator LerpPosition()
+    {
+        float time = 0;
+        
+        Vector3 newPos = CalculateNewPosition();
+
+        if (_boardBounds.Contains(newPos))
+        {
+            float step = (_movementSpeed / Vector3.Distance(transform.position, newPos)) * Time.deltaTime;
+            while (time < 1)
+            {
+                transform.position = Vector3.Lerp(transform.position, newPos, time);
+                time += step;
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            transform.position = newPos;
+        }
+    }
+ 
+    
     private void HandleMovement()
+    {
+        Vector3 newPos = CalculateNewPosition();
+
+        if (_boardBounds.Contains(newPos))
+        {
+            transform.position = newPos;
+        }
+    }
+ 
+    private Vector3 CalculateNewPosition()
     {
         Vector3 newPos = transform.position;
 
@@ -48,13 +89,10 @@ public class PlayerController : MonoBehaviour
             float newZ = transform.position.z + (_currentDirection.y > 0 ? tileHeight : -tileHeight);
             newPos.z = newZ;
         }
-        if (_boardBounds.Contains(newPos))
-        {
-            Vector3 translation = (newPos - transform.position) * _movementSpeed * Time.deltaTime;
-            transform.Translate(translation);
-        }
+        
+        return newPos;
     }
-    
+
     public void Move(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -140,6 +178,12 @@ public class PlayerController : MonoBehaviour
         {
             _audioPitch -= 1f * Time.deltaTime;
             _audioPitch = Mathf.Max(1f, _audioPitch);
+        }
+        else if (_audioPitch < 1f)
+        {
+            // Return the pitch to 1 more quickly
+            _audioPitch += 1.5f * Time.deltaTime; // You can adjust the value for faster/slower increase
+            _audioPitch = Mathf.Min(1f, _audioPitch);
         }
         
         _audioSource.pitch = _audioPitch;

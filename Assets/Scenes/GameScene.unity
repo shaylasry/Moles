@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
-  _movementSpeed: 10
+  _movementSpeed: 7
   _rotationSpeed: 50
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
   _smokeParticleSystem: {fileID: 889805062}
