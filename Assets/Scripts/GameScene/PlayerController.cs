@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     
     IEnumerator MovementCoroutine()
     {
-        while (true) // Infinite loop to keep the coroutine running
+        while (true) //TODO - change the true to boolean that indicates if the game is still running or not
         {
             yield return LerpPosition();
         }
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
         else if (_audioPitch < 1f)
         {
             // Return the pitch to 1 more quickly
-            _audioPitch += 1.5f * Time.deltaTime; // You can adjust the value for faster/slower increase
+            _audioPitch += 1.5f * Time.deltaTime; 
             _audioPitch = Mathf.Min(1f, _audioPitch);
         }
         
