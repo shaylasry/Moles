@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
     
-    [SerializeField] private float _movementSpeed = 13f;
+    [SerializeField] private float _movementSpeed = 20f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
     private Vector3 _positionToMoveTo;
