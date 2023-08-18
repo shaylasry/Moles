@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
     
-    [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float _movementDuration = 0.1f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
     
@@ -24,15 +25,41 @@ public class PlayerController : MonoBehaviour
         SetInitialPosition();
         _boardBounds = CalculateBounds();
         _audioSource = GetComponent<AudioSource>();
+        StartCoroutine(MovementCoroutine());
     }
 
     void Update()
     {
-        HandleMovement();
         HandlePitch();
     }
+    
+    IEnumerator MovementCoroutine()
+    {
+        while (true) //TODO - change the true to boolean that indicates if the game is still running or not
+        {
+            yield return LerpPosition();
+        }
+    }
 
-    private void HandleMovement()
+    IEnumerator LerpPosition()
+    {
+        Vector3 newPos = CalculateNewPosition();
+
+        if (_boardBounds.Contains(newPos))
+        {
+            float time = 0;
+            while (time < _movementDuration)
+            {
+                transform.position = Vector3.Lerp(transform.position, newPos, time / _movementDuration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = newPos;
+        }
+    }
+ 
+    private Vector3 CalculateNewPosition()
     {
         Vector3 newPos = transform.position;
 
@@ -48,13 +75,10 @@ public class PlayerController : MonoBehaviour
             float newZ = transform.position.z + (_currentDirection.y > 0 ? tileHeight : -tileHeight);
             newPos.z = newZ;
         }
-        if (_boardBounds.Contains(newPos))
-        {
-            Vector3 translation = (newPos - transform.position) * _movementSpeed * Time.deltaTime;
-            transform.Translate(translation);
-        }
+        
+        return newPos;
     }
-    
+
     public void Move(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -78,7 +102,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("[test] colision");
         if (other.gameObject.CompareTag("GrassBlade"))
         {
             Destroy(other.gameObject);
@@ -140,6 +163,12 @@ public class PlayerController : MonoBehaviour
         {
             _audioPitch -= 1f * Time.deltaTime;
             _audioPitch = Mathf.Max(1f, _audioPitch);
+        }
+        else if (_audioPitch < 1f)
+        {
+            // Return the pitch to 1 more quickly
+            _audioPitch += 1.5f * Time.deltaTime; 
+            _audioPitch = Mathf.Min(1f, _audioPitch);
         }
         
         _audioSource.pitch = _audioPitch;

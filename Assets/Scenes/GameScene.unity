@@ -246,7 +246,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
+  m_Radius: 1.3
   m_Center: {x: 0, y: 0.37, z: 0.16}
 --- !u!82 &890265322
 AudioSource:
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
-  _movementSpeed: 10
+  _movementDuration: 0.1
   _rotationSpeed: 50
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
   _smokeParticleSystem: {fileID: 889805062}
