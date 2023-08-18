@@ -6,9 +6,11 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool _isGameRunning = false;
+    
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
-    
+
     [SerializeField] private float _movementDuration = 0.1f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
@@ -19,13 +21,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip _grassPopAudioClip;
     
     [SerializeField] private ParticleSystem _smokeParticleSystem;
-
+    
     private void Start()
     {
         SetInitialPosition();
         _boardBounds = CalculateBounds();
         _audioSource = GetComponent<AudioSource>();
-        StartCoroutine(MovementCoroutine());
     }
 
     void Update()
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
     
     IEnumerator MovementCoroutine()
     {
-        while (true) //TODO - change the true to boolean that indicates if the game is still running or not
+        while (_isGameRunning) //TODO - change the true to boolean that indicates if the game is still running or not
         {
             yield return LerpPosition();
         }
@@ -83,6 +84,13 @@ public class PlayerController : MonoBehaviour
     {
         if (!context.performed) return;
         
+        if (!_isGameRunning)
+        {
+            _isGameRunning = true;
+            StartCoroutine(MovementCoroutine());
+            return;
+        }
+        
         _currentDirection = context.ReadValue<Vector2>();
         HandleRotation();
         HandleSmoke();
@@ -104,8 +112,13 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GrassBlade"))
         {
-            Destroy(other.gameObject);
-            HandleGrassBladeCollision();
+            HandleGrassBladeCollision(other.gameObject);
+        }
+        
+        if (other.gameObject.CompareTag("DynamicEnemy"))
+        {
+            Destroy(gameObject);
+            Debug.Log("Game Over!");
         }
     }
     
@@ -141,8 +154,10 @@ public class PlayerController : MonoBehaviour
         return new Bounds(center, boardSize);
     }
     
-    private void HandleGrassBladeCollision()
+    private void HandleGrassBladeCollision(GameObject gameObject)
     {
+        Destroy(gameObject);
+        
         _audioPitch += .01f;
         if (_grassPopCooldown <= 0)
         {
