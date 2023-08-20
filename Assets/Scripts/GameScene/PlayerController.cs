@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float _grassPopCooldown;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _grassPopAudioClip;
+    private int _numOfGrassBlade;
     
     [SerializeField] private ParticleSystem _smokeParticleSystem;
     
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
         _boardBounds = CalculateBounds();
         _audioSource = GetComponent<AudioSource>();
     }
-
+    
     void Update()
     {
         HandlePitch();

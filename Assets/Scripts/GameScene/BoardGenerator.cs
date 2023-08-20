@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,15 +10,13 @@ public class BoardGenerator : MonoBehaviour
     private GameObject[,] _tiles; 
     
     private EnemiesGenerator _enemiesGenerator;
-    
-    void Start()
+
+    public void Awake()
     {
-        GenerateBoard();
         _enemiesGenerator = GetComponent<EnemiesGenerator>();
-        _enemiesGenerator.GenerateMoles(tilePositions);
     }
-    
-    private void GenerateBoard()
+
+    public void GenerateBoard()
     {
         _tiles = new GameObject[(int)_boardData.width,(int)_boardData.height];
         tilePositions = new Vector3[(int)_boardData.width, (int)_boardData.height];
@@ -35,5 +34,12 @@ public class BoardGenerator : MonoBehaviour
                 _tiles[i,j] = Instantiate(_boardData.tile.tilePrefab, position, Quaternion.identity, transform);
             }
         }
+        
+        GenerateEnemies();
+    }
+
+    private void GenerateEnemies()
+    {
+        _enemiesGenerator.GenerateMoles(tilePositions);
     }
 }

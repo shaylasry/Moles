@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,23 +14,31 @@ public class GameManager : MonoBehaviour
     private PlayerInput _playerInput;
     private GameObject _player;
     
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _boardGenerator = GetComponent<BoardGenerator>();
         _playerGenerator = GetComponent<PlayerGenerator>();
-        // _playerController = GetComponent<PlayerController>();
         _playerInput = GetComponent<PlayerInput>();
-        
-        _player = _playerGenerator.GeneratePlayer();
-        _player.GetComponentInParent<PlayerController>();
-        // _playerInput.
 
+        GenerateGame();
+    }
+
+    private void GenerateGame()
+    {
+        _boardGenerator.GenerateBoard();
+        _player = _playerGenerator.GeneratePlayer();
+        // _numOfGrassBlade = GameObject.FindGameObjectsWithTag("GrassBlade").Length;
+        
+        InputAction moveAction = _playerInput.actions.FindAction("Move");
+        moveAction.performed += context => _player.GetComponent<PlayerController>().Move(context);
+    }
+
+    void Start()
+    {
+        
     }
     
-
-    // Update is called once per frame
     void Update()
     {
         

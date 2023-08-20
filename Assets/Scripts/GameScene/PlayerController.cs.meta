@@ -1,3 +1,14 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: 45b43394caee4bbcaedb9e2844d6085d
-timeCreated: 1689927756
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _boardData: {instanceID: 0}
+  - _grassPopAudioClip: {instanceID: 0}
+  - _smokeParticleSystem: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
