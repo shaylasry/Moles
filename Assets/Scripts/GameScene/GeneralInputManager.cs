@@ -8,7 +8,6 @@ public class GeneralInputManager : MonoBehaviour
         
     public void Move(InputAction.CallbackContext context)
     {
-        Debug.Log(("[TEST]: received move!"));
         onMove?.Invoke(context);
     }
 }

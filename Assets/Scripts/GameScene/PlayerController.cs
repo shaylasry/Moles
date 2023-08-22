@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
     
+    public static event Action onPlayerLose;
+    public static event Action onPopGrass;
     private float _audioPitch = 1f;
     private float _grassPopCooldown;
     private AudioSource _audioSource;
@@ -37,16 +39,12 @@ public class PlayerController : MonoBehaviour
     private void Subscribe()
     {
         GeneralInputManager.onMove += DidMove;
+        GameState.onGameStateChange += GetGameState;
     }
 
     private void Unsubscribe()
     {
         GeneralInputManager.onMove -= DidMove;
-    }
-
-    private void DidMove(InputAction.CallbackContext context)
-    {
-        Move(context);
     }
 
     private void Start()
@@ -59,6 +57,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandlePitch();
+    }
+
+    private void GetGameState(bool isGameRunning)
+    {
+        _isGameRunning = isGameRunning;
+
+        if (_isGameRunning)
+        {
+            StartCoroutine(MovementCoroutine());
+        }
+        else
+        {
+            StopCoroutine(MovementCoroutine());
+        }
     }
     
     IEnumerator MovementCoroutine()
@@ -107,16 +119,9 @@ public class PlayerController : MonoBehaviour
         return newPos;
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void DidMove(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
-        
-        if (!_isGameRunning)
-        {
-            _isGameRunning = true;
-            StartCoroutine(MovementCoroutine());
-            return;
-        }
+        if (!context.performed || !_isGameRunning) return;
         
         _currentDirection = context.ReadValue<Vector2>();
         HandleRotation();
@@ -145,7 +150,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("DynamicEnemy"))
         {
             Destroy(gameObject);
-            Debug.Log("Game Over!");
+            onPlayerLose?.Invoke();
         }
     }
     
@@ -184,6 +189,7 @@ public class PlayerController : MonoBehaviour
     private void HandleGrassBladeCollision(GameObject gameObject)
     {
         Destroy(gameObject);
+        onPopGrass?.Invoke();
         
         _audioPitch += .01f;
         if (_grassPopCooldown <= 0)
