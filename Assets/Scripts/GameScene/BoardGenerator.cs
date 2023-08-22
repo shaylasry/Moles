@@ -9,11 +9,10 @@ public class BoardGenerator : MonoBehaviour
     public Vector3[,] tilePositions { get; private set; }
     private GameObject[,] _tiles; 
     
-    private EnemiesGenerator _enemiesGenerator;
+    [SerializeField] private EnemiesGenerator _enemiesGenerator;
 
     public void Awake()
     {
-        _enemiesGenerator = GetComponent<EnemiesGenerator>();
     }
 
     public void GenerateBoard()

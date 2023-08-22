@@ -23,7 +23,32 @@ public class PlayerController : MonoBehaviour
     private int _numOfGrassBlade;
     
     [SerializeField] private ParticleSystem _smokeParticleSystem;
-    
+
+    private void OnEnable()
+    {
+        Subscribe();
+    }
+
+    private void OnDisable()
+    {
+        Unsubscribe();   
+    }
+
+    private void Subscribe()
+    {
+        GeneralInputManager.onMove += DidMove;
+    }
+
+    private void Unsubscribe()
+    {
+        GeneralInputManager.onMove -= DidMove;
+    }
+
+    private void DidMove(InputAction.CallbackContext context)
+    {
+        Move(context);
+    }
+
     private void Start()
     {
         SetInitialPosition();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerGenerator : MonoBehaviour
 {
-    [SerializeField] private BoardData _boardData;
+    [SerializeField]  private BoardData _boardData;
     [SerializeField] private GameObject _prefab;
     
     public GameObject GeneratePlayer()
@@ -19,8 +19,6 @@ public class PlayerGenerator : MonoBehaviour
         Vector3 startPos = new Vector3(startX, 1f, startZ);
 
         Debug.Log(startPos);
-        GameObject player = Instantiate(_prefab, startPos, Quaternion.identity);
-
-        return player;
+        return  Instantiate(_prefab, startPos, Quaternion.identity);
     }
 }
