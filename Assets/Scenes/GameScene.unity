@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardGenerator: {fileID: 1084441267}
+  _enemiesGenerator: {fileID: 0}
 --- !u!4 &1357358461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684433304399607480, guid: 9cb5088673a924d409361addf588189c,
@@ -1207,8 +1208,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: c1b02f55-3d55-4874-ad5d-3cb1af0953c3
-    m_ActionName: Game/StartGame[/Keyboard/anyKey]
+    m_ActionId: 11967723-59b3-420b-b56a-78928eb34791
+    m_ActionName: Player/StartGame[/Keyboard/anyKey]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

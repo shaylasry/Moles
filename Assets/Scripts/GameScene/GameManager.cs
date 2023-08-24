@@ -3,8 +3,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private BoardGenerator _boardGenerator;
+    [SerializeField] private EnemiesGenerator _enemiesGenerator;
+    public Vector3[,] boardTilePositions { get; private set; }
     private GameObject _player;
     private int _numOfGrassBlade;
+    
     
     private GameStateMachine _gameStateMachine;
     private RunningState _runningState;
@@ -31,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void GenerateGame()
     {
-        _boardGenerator.GenerateBoard();
+        boardTilePositions = _boardGenerator.GenerateBoard();
         _numOfGrassBlade = GameObject.FindGameObjectsWithTag("GrassBlade").Length;
     }
     
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour
     private void GameDidStart()
     {
         _gameStateMachine.SetState(_runningState);
+        _enemiesGenerator.GenerateMoles(boardTilePositions);
     }
     
     void Start()

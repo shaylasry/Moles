@@ -11,11 +11,7 @@ public class BoardGenerator : MonoBehaviour
     
     [SerializeField] private EnemiesGenerator _enemiesGenerator;
 
-    public void Awake()
-    {
-    }
-
-    public void GenerateBoard()
+    public Vector3[,] GenerateBoard()
     {
         _tiles = new GameObject[(int)_boardData.width,(int)_boardData.height];
         tilePositions = new Vector3[(int)_boardData.width, (int)_boardData.height];
@@ -33,8 +29,8 @@ public class BoardGenerator : MonoBehaviour
                 _tiles[j, i] = Instantiate(_boardData.tile.tilePrefab, position, Quaternion.identity);
             }
         }
-        
-        GenerateEnemies();
+
+        return tilePositions;
     }
 
     private void GenerateEnemies()

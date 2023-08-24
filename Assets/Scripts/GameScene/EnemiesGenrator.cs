@@ -11,36 +11,61 @@ public class EnemiesGenerator : MonoBehaviour
     [SerializeField] private int _numOfMoles;
     private List<GameObject> _moles = new List<GameObject>();
     private HashSet<Vector3> _staticEnemies = new HashSet<Vector3>();
-    private bool _isGameRunning; 
-    
-    void OnEnable()
+    private bool _isGameRunning;
+    private Vector3[,] _boardTilePositions;
+
+    private void OnEnable()
     {
-        _isGameRunning = true; 
+        Subscribe();
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
-        _isGameRunning = false;
+        Unsubscribe();   
+    }
+
+    private void Subscribe()
+    {
+        GameStateMachine.onGameStateChange += GetGameState;
+    }
+
+    private void Unsubscribe()
+    {
+        GameStateMachine.onGameStateChange -= GetGameState;
+    }
+    
+    private void GetGameState(bool isGameRunning)
+    {
+        _isGameRunning = isGameRunning;
+
+        if (_isGameRunning)
+        {
+            StartCoroutine(MolesMovementCoroutine());
+        }
+        else
+        {
+            StopCoroutine(MolesMovementCoroutine());
+        }
     }
 
     public void GenerateMoles(Vector3[,] tilePositions)
     {
+        _boardTilePositions = tilePositions;
         HashSet<Vector3> currentMolesPositions = new HashSet<Vector3>();
         for (int i = 0; i < _numOfMoles; i++)
         {
             _moles.Add(Instantiate(_molePrefab, GetNewMolePosition(currentMolesPositions, tilePositions), Quaternion.identity, transform));
         }
-        
-        StartCoroutine(MolesMovementCoroutine(tilePositions));
     }
 
-    IEnumerator MolesMovementCoroutine(Vector3[,] tilePositions)
+    IEnumerator MolesMovementCoroutine()
     {
         while (_isGameRunning)
         {
             HashSet<Vector3> currentMolesPositions = new HashSet<Vector3>();
             foreach (GameObject mole in _moles)
             {
-                Vector3 newMolePosition = GetNewMolePosition(currentMolesPositions, tilePositions);
+                Vector3 newMolePosition = GetNewMolePosition(currentMolesPositions, _boardTilePositions);
                 mole.transform.position = newMolePosition;
                 currentMolesPositions.Add(newMolePosition);
             }
