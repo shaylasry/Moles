@@ -13,7 +13,7 @@ public class EnemiesGenerator : MonoBehaviour
     private HashSet<Vector3> _staticEnemies = new HashSet<Vector3>();
     private bool _isGameRunning;
     private Vector3[,] _boardTilePositions;
-
+    
     private void OnEnable()
     {
         Subscribe();
@@ -33,7 +33,7 @@ public class EnemiesGenerator : MonoBehaviour
     {
         GameStateMachine.onGameStateChange -= GetGameState;
     }
-    
+
     private void GetGameState(bool isGameRunning)
     {
         _isGameRunning = isGameRunning;
@@ -48,13 +48,17 @@ public class EnemiesGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateMoles(Vector3[,] tilePositions)
+    public void InitializeGenerator(Vector3[,] boardTilePositions)
     {
-        _boardTilePositions = tilePositions;
+        _boardTilePositions = boardTilePositions;
+    }
+    
+    public void GenerateMoles()
+    {
         HashSet<Vector3> currentMolesPositions = new HashSet<Vector3>();
         for (int i = 0; i < _numOfMoles; i++)
         {
-            _moles.Add(Instantiate(_molePrefab, GetNewMolePosition(currentMolesPositions, tilePositions), Quaternion.identity, transform));
+            _moles.Add(Instantiate(_molePrefab, GetNewMolePosition(currentMolesPositions, _boardTilePositions), Quaternion.identity, transform));
         }
     }
 

@@ -190,7 +190,6 @@ public class PlayerController : MonoBehaviour
     private void HandleGrassBladeCollision(GameObject gameObject)
     {
         Destroy(gameObject);
-        onPopGrass?.Invoke();
         
         _audioPitch += .01f;
         if (_grassPopCooldown <= 0)

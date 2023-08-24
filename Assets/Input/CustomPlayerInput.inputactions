@@ -2,12 +2,6 @@
     "name": "CustomPlayerInput",
     "maps": [
         {
-            "name": "Game",
-            "id": "67387c5c-1393-4fba-a7d6-e1938ef48dbc",
-            "actions": [],
-            "bindings": []
-        },
-        {
             "name": "Player",
             "id": "3a452ef7-206e-4377-b828-381e68e57b0b",
             "actions": [

@@ -32,9 +32,4 @@ public class BoardGenerator : MonoBehaviour
 
         return tilePositions;
     }
-
-    private void GenerateEnemies()
-    {
-        _enemiesGenerator.GenerateMoles(tilePositions);
-    }
 }
