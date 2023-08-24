@@ -3,8 +3,8 @@
 public class GameState
 {
     protected GameStateMachine gameStateMachine;
-    protected bool isGameRunning;
-    public static Action<bool> onGameStateChange;
+    public bool isGameRunning { get; protected set; }
+   
     public GameState(GameStateMachine gameStateMachine)
     {
         this.gameStateMachine = gameStateMachine;
@@ -12,6 +12,8 @@ public class GameState
 
     public void EnterState()
     {
-        onGameStateChange?.Invoke(isGameRunning);
+    }
+    public void ExitState()
+    {
     }
 }

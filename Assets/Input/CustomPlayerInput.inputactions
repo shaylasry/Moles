@@ -2,6 +2,12 @@
     "name": "CustomPlayerInput",
     "maps": [
         {
+            "name": "Game",
+            "id": "67387c5c-1393-4fba-a7d6-e1938ef48dbc",
+            "actions": [],
+            "bindings": []
+        },
+        {
             "name": "Player",
             "id": "3a452ef7-206e-4377-b828-381e68e57b0b",
             "actions": [
@@ -13,6 +19,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "StartGame",
+                    "type": "Button",
+                    "id": "11967723-59b3-420b-b56a-78928eb34791",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -145,6 +160,17 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48fdb078-499e-4ecf-81b4-9c249cb50aae",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -661,34 +687,6 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Game",
-            "id": "c0fa8949-dfbe-4541-90fc-405baab4c53f",
-            "actions": [
-                {
-                    "name": "StartGame",
-                    "type": "Value",
-                    "id": "bebeee79-9013-446d-be53-d643036d0aa9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "d3c2ac46-9ab3-40b9-88f8-502e314ed031",
-                    "path": "<Keyboard>/anyKey",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
-                    "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

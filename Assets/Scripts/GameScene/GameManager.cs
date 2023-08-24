@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private PauseState _pauseState;
     private WinState _winState;
     private LoseState _loseState;
+    private PreGameState _preGameState;
     
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         _pauseState = new PauseState(_gameStateMachine);
         _winState = new WinState(_gameStateMachine);
         _loseState = new LoseState(_gameStateMachine);
+        _preGameState = new PreGameState(_gameStateMachine);
     }
 
     private void GenerateGame()
@@ -47,16 +49,19 @@ public class GameManager : MonoBehaviour
     {
         PlayerController.onPopGrass += UpdateNumOfGrassBlade;
         PlayerController.onPlayerLose += PlayerLose;
+        GeneralInputManager.onStartGame += GameDidStart;
     }
 
     private void Unsubscribe()
     {
         PlayerController.onPopGrass -= UpdateNumOfGrassBlade;
+        PlayerController.onPlayerLose -= PlayerLose;
+        GeneralInputManager.onStartGame -= GameDidStart;
     }
     
     private void PlayerLose()
     {
-        _gameStateMachine.ChangeState(_loseState);
+        _gameStateMachine.SetState(_loseState);
         Debug.Log("Game Over!");
     }
 
@@ -66,12 +71,18 @@ public class GameManager : MonoBehaviour
 
         if (_numOfGrassBlade <= 0)
         {
-            _gameStateMachine.ChangeState(_winState);
+            _gameStateMachine.SetState(_winState);
             Debug.Log("Win!");
         }
     }
+    
+    private void GameDidStart()
+    {
+        _gameStateMachine.SetState(_runningState);
+    }
+    
     void Start()
     {
-        _gameStateMachine.ChangeState(_runningState);
+        _gameStateMachine.SetState(_preGameState);
     }
 }

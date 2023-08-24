@@ -39,12 +39,13 @@ public class PlayerController : MonoBehaviour
     private void Subscribe()
     {
         GeneralInputManager.onMove += DidMove;
-        GameState.onGameStateChange += GetGameState;
+        GameStateMachine.onGameStateChange += GetGameState;
     }
 
     private void Unsubscribe()
     {
         GeneralInputManager.onMove -= DidMove;
+        GameStateMachine.onGameStateChange -= GetGameState;
     }
 
     private void Start()
