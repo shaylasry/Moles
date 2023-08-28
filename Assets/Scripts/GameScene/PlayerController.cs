@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,36 +7,75 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    public static event Action DidHitGrassBlade;
+    public static event Action DidHitEnemy;
+    
+    private bool _isGameRunning = false;
+    
     [SerializeField] private BoardData _boardData;
     private Bounds _boardBounds;
-    
+
     [SerializeField] private float _movementDuration = 0.1f;
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
     
     private float _audioPitch = 1f;
     private float _grassPopCooldown;
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _grassPopAudioClip;
+    private int _numOfGrassBlade;
     
     [SerializeField] private ParticleSystem _smokeParticleSystem;
-
+    
     private void Start()
     {
-        SetInitialPosition();
         _boardBounds = CalculateBounds();
-        _audioSource = GetComponent<AudioSource>();
-        StartCoroutine(MovementCoroutine());
     }
-
+    
     void Update()
     {
         HandlePitch();
     }
     
+    private void OnEnable()
+    {
+        Subscribe();
+    }
+
+    private void OnDisable()
+    {
+        Unsubscribe();   
+    }
+
+    private void Subscribe()
+    {
+        GeneralInputManager.onMove += DidMove;
+        GameManager.GameRunningStateDidChange += OnGameRunningStateChange;
+    }
+
+    private void Unsubscribe()
+    {
+        GeneralInputManager.onMove -= DidMove;
+        GameManager.GameRunningStateDidChange -= OnGameRunningStateChange;
+    }
+
+    private void OnGameRunningStateChange(bool isGameRunning)
+    {
+        _isGameRunning = isGameRunning;
+
+        if (_isGameRunning)
+        {
+            StartCoroutine(MovementCoroutine());
+        }
+        else
+        {
+            StopCoroutine(MovementCoroutine());
+        }
+    }
+    
     IEnumerator MovementCoroutine()
     {
-        while (true) //TODO - change the true to boolean that indicates if the game is still running or not
+        while (_isGameRunning) //TODO - change the true to boolean that indicates if the game is still running or not
         {
             yield return LerpPosition();
         }
@@ -79,9 +119,9 @@ public class PlayerController : MonoBehaviour
         return newPos;
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void DidMove(InputAction.CallbackContext context)
     {
-        if (!context.performed) return;
+        if (!context.performed || !_isGameRunning) return;
         
         _currentDirection = context.ReadValue<Vector2>();
         HandleRotation();
@@ -104,26 +144,19 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GrassBlade"))
         {
-            Destroy(other.gameObject);
-            HandleGrassBladeCollision();
+            HandleGrassBladeCollision(other.gameObject);
+            DidHitGrassBlade?.Invoke();
         }
     }
-    
-    private void SetInitialPosition()
+
+    private void OnTriggerEnter(Collider other)
     {
-        Vector2 boardSize = new Vector2(_boardData.width * _boardData.tile.width,
-            _boardData.height * _boardData.tile.height);
-
-        float startX = -boardSize.x / 2 + _boardData.tile.width / 2;
-        float startZ = boardSize.y / 2 - _boardData.tile.height / 2;
-
-        Vector3 startPos = new Vector3(startX, 1f, startZ);
-
-        transform.position = startPos;
-        
-        HandleRotation();
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            DidHitEnemy?.Invoke();
+        }
     }
-    
+
     public Bounds CalculateBounds()
     {
         FloorTile tile = _boardData.tile;
@@ -141,8 +174,10 @@ public class PlayerController : MonoBehaviour
         return new Bounds(center, boardSize);
     }
     
-    private void HandleGrassBladeCollision()
+    private void HandleGrassBladeCollision(GameObject gameObject)
     {
+        Destroy(gameObject);
+        
         _audioPitch += .01f;
         if (_grassPopCooldown <= 0)
         {

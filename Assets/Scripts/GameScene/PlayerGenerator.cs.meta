@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 45b43394caee4bbcaedb9e2844d6085d
+guid: e9ea5d5f088af79469b5706e2a3276da
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _boardData: {instanceID: 0}
-  - _grassPopAudioClip: {instanceID: 0}
-  - _smokeParticleSystem: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
