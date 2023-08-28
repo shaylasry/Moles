@@ -8,9 +8,7 @@ public class BoardGenerator : MonoBehaviour
     [SerializeField] private BoardData _boardData;
     public Vector3[,] tilePositions { get; private set; }
     private GameObject[,] _tiles; 
-    
-    [SerializeField] private EnemiesGenerator _enemiesGenerator;
-
+ 
     public Vector3[,] GenerateBoard()
     {
         _tiles = new GameObject[(int)_boardData.width,(int)_boardData.height];

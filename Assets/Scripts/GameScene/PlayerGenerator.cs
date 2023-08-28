@@ -6,9 +6,9 @@ using UnityEngine;
 public class PlayerGenerator : MonoBehaviour
 {
     [SerializeField]  private BoardData _boardData;
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] private Player _prefab;
     
-    public GameObject GeneratePlayer()
+    public Player GeneratePlayer()
     {
         Vector2 boardSize = new Vector2(_boardData.width * _boardData.tile.width,
             _boardData.height * _boardData.tile.height);
@@ -18,7 +18,6 @@ public class PlayerGenerator : MonoBehaviour
 
         Vector3 startPos = new Vector3(startX, 1f, startZ);
 
-        Debug.Log(startPos);
-        return  Instantiate(_prefab, startPos, Quaternion.identity);
+        return Instantiate(_prefab, startPos, Quaternion.identity);
     }
 }

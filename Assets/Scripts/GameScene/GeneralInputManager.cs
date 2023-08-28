@@ -4,22 +4,21 @@ using UnityEngine.InputSystem;
 
 public class GeneralInputManager : MonoBehaviour
 {
+    [SerializeField] private GameManager _gameManager;
     public static event Action<InputAction.CallbackContext> onMove;
-    public static event Action onStartGame;
-    private bool _isGameStarted = false;
-        
+    public static event Action OnFirstButtonPress;
+    
     public void StartGame(InputAction.CallbackContext context)
     {
-        if (!_isGameStarted)
+        if (_gameManager.currentState == GameManager.GameManagerState.PreGame)
         {
-            _isGameStarted = true;
-            onStartGame?.Invoke();
+            OnFirstButtonPress?.Invoke();
         }
     }
     
     public void Move(InputAction.CallbackContext context)
     {
-        if (_isGameStarted)
+        if (_gameManager.currentState == GameManager.GameManagerState.Game)
         {
             onMove?.Invoke(context);
         }

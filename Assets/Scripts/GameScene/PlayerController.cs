@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    public static event Action DidHitGrassBlade;
+    public static event Action DidHitEnemy;
+    
     private bool _isGameRunning = false;
     
     [SerializeField] private BoardData _boardData;
@@ -16,16 +19,24 @@ public class PlayerController : MonoBehaviour
     private Vector2 _currentDirection = Vector2.right;  // Initial direction
     [SerializeField] private float _rotationSpeed = 50.0f;
     
-    public static event Action onPlayerLose;
-    public static event Action onPopGrass;
     private float _audioPitch = 1f;
     private float _grassPopCooldown;
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _grassPopAudioClip;
     private int _numOfGrassBlade;
     
     [SerializeField] private ParticleSystem _smokeParticleSystem;
-
+    
+    private void Start()
+    {
+        _boardBounds = CalculateBounds();
+    }
+    
+    void Update()
+    {
+        HandlePitch();
+    }
+    
     private void OnEnable()
     {
         Subscribe();
@@ -39,28 +50,16 @@ public class PlayerController : MonoBehaviour
     private void Subscribe()
     {
         GeneralInputManager.onMove += DidMove;
-        GameStateMachine.onGameStateChange += GetGameState;
+        GameManager.GameRunningStateDidChange += OnGameRunningStateChange;
     }
 
     private void Unsubscribe()
     {
         GeneralInputManager.onMove -= DidMove;
-        GameStateMachine.onGameStateChange -= GetGameState;
+        GameManager.GameRunningStateDidChange -= OnGameRunningStateChange;
     }
 
-    private void Start()
-    {
-        SetInitialPosition();
-        _boardBounds = CalculateBounds();
-        _audioSource = GetComponent<AudioSource>();
-    }
-    
-    void Update()
-    {
-        HandlePitch();
-    }
-
-    private void GetGameState(bool isGameRunning)
+    private void OnGameRunningStateChange(bool isGameRunning)
     {
         _isGameRunning = isGameRunning;
 
@@ -146,30 +145,18 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("GrassBlade"))
         {
             HandleGrassBladeCollision(other.gameObject);
-        }
-        
-        if (other.gameObject.CompareTag("DynamicEnemy"))
-        {
-            Destroy(gameObject);
-            onPlayerLose?.Invoke();
+            DidHitGrassBlade?.Invoke();
         }
     }
-    
-    private void SetInitialPosition()
+
+    private void OnTriggerEnter(Collider other)
     {
-        Vector2 boardSize = new Vector2(_boardData.width * _boardData.tile.width,
-            _boardData.height * _boardData.tile.height);
-
-        float startX = -boardSize.x / 2 + _boardData.tile.width / 2;
-        float startZ = boardSize.y / 2 - _boardData.tile.height / 2;
-
-        Vector3 startPos = new Vector3(startX, 1f, startZ);
-
-        transform.position = startPos;
-        
-        HandleRotation();
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            DidHitEnemy?.Invoke();
+        }
     }
-    
+
     public Bounds CalculateBounds()
     {
         FloorTile tile = _boardData.tile;

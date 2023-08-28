@@ -136,10 +136,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6491932892078870515}
-  - component: {fileID: 2958682549942113123}
+  - component: {fileID: 3684769658620352969}
   - component: {fileID: 4667014496927138103}
   - component: {fileID: 912646686446138036}
   - component: {fileID: 2285533008604088803}
+  - component: {fileID: 6658914140437005452}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -165,7 +166,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2958682549942113123
+--- !u!114 &3684769658620352969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,8 +181,13 @@ MonoBehaviour:
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
   _movementDuration: 0.1
   _rotationSpeed: 50
+  _audioSource: {fileID: 2285533008604088803}
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
-  _smokeParticleSystem: {fileID: 2513187464200968355}
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _smokeParticleSystem: {fileID: 1680543226430786858, guid: c304ec9ecd6f2e94c996d42724c16074,
+    type: 3}
 --- !u!54 &4667014496927138103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -326,6 +332,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6658914140437005452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7309283214294339611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef63d6fdba1a46f9b24457b38d8f9867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &135230258156046767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,12 +508,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c304ec9ecd6f2e94c996d42724c16074, type: 3}
---- !u!198 &2513187464200968355 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1680543226430786858, guid: c304ec9ecd6f2e94c996d42724c16074,
-    type: 3}
-  m_PrefabInstance: {fileID: 3869400804816409993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6992606151399999266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6104741140091228843, guid: c304ec9ecd6f2e94c996d42724c16074,

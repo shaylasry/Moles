@@ -208,12 +208,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cb5088673a924d409361addf588189c, type: 3}
---- !u!1 &278415254 stripped
+--- !u!1 &278415254
 GameObject:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 1828176343135722300, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
     type: 3}
   m_PrefabInstance: {fileID: 1957660588}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890265320}
+  - component: {fileID: 890265323}
+  - component: {fileID: 890265324}
+  - component: {fileID: 890265321}
+  - component: {fileID: 890265322}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!198 &889805062 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1680543226430786858, guid: c304ec9ecd6f2e94c996d42724c16074,
@@ -226,12 +241,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 994855778}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &890265320 stripped
+--- !u!4 &890265320
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 6624446795131423656, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
     type: 3}
   m_PrefabInstance: {fileID: 1957660588}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278415254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1357358461}
+  - {fileID: 889805064}
+  - {fileID: 1417853136}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &890265321
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -364,8 +392,37 @@ MonoBehaviour:
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
   _movementDuration: 0.1
   _rotationSpeed: 50
+  _audioSource: {fileID: 0}
   _grassPopAudioClip: {fileID: 8300000, guid: d114333f5d2ee4f50b7fe19b0367fd27, type: 3}
   _smokeParticleSystem: {fileID: 889805062}
+--- !u!54 &890265324
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -7118770225179002433, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
+    type: 3}
+  m_PrefabInstance: {fileID: 1957660588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278415254}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &994855778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -450,7 +507,8 @@ GameObject:
   - component: {fileID: 1084441270}
   - component: {fileID: 1084441272}
   - component: {fileID: 1084441267}
-  - component: {fileID: 1084441268}
+  - component: {fileID: 1084441274}
+  - component: {fileID: 1084441275}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -471,22 +529,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
-  _enemiesGenerator: {fileID: 1084441268}
---- !u!114 &1084441268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084441266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4121d4136928b17499f1b5a799830578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _molePrefab: {fileID: 6128457147491594564, guid: bb27bb24fe58d654a9de1b82e1904550,
-    type: 3}
-  _numOfMoles: 3
 --- !u!4 &1084441270
 Transform:
   m_ObjectHideFlags: 0
@@ -515,7 +557,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardGenerator: {fileID: 1084441267}
-  _enemiesGenerator: {fileID: 0}
+  _enemiesGenerator: {fileID: 1084441274}
+  _playerGenerator: {fileID: 1084441275}
+--- !u!114 &1084441274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084441266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208a5171cbc147b4b495893236ce7869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numOfEnemies: 3
+  _enemy: {fileID: 174160389335424733, guid: 6364b8cf38851524185a848c943e7355, type: 3}
+--- !u!114 &1084441275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084441266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ea5d5f088af79469b5706e2a3276da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
+  _prefab: {fileID: 6658914140437005452, guid: 09771508abef0f842a7388378b84248d, type: 3}
 --- !u!4 &1357358461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684433304399607480, guid: 9cb5088673a924d409361addf588189c,
@@ -798,7 +869,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardData: {fileID: 11400000, guid: cd0ef64fdcbb66a429fda6858da45e96, type: 2}
-  _enemiesGenerator: {fileID: 0}
 --- !u!4 &1766327314
 Transform:
   m_ObjectHideFlags: 0
@@ -1003,7 +1073,7 @@ PrefabInstance:
     - target: {fileID: 1828176343135722300, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6624446795131423656, guid: 5ba6ed0a92fac8a4095c19d55b8b5896,
         type: 3}
@@ -1242,3 +1312,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb705e6e5944579b59122dde86404ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameManager: {fileID: 1084441272}
